@@ -1,0 +1,25 @@
+services:
+  frontend:
+    image: topthammanun/my-react
+    networks:
+      - internal
+    environment:
+      - ACCESS _TOKEN=1234
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    ports:
+      - "8081:81"
+      - "8080:80"
+    networks:
+      - internal
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    networks:
+      - internal
+networks:
+  internal:
+    driver: bridge
